@@ -1,0 +1,42 @@
+query MyFirstQuery {
+  user(login: "enkeboll") {
+    bio
+    name
+    avatarUrl
+    repositories(last: 1) {
+      edges {
+        node {
+          name
+          id
+          createdAt
+        }
+      }
+    }
+    firstThree:following(first: 3) {
+      edges {
+        node {
+          ...userInfo
+        }
+      }
+    }
+    lastThree:following(last: 3) {
+      edges {
+        node {
+        	...userInfo
+        }
+      }
+    }
+  }
+}
+
+fragment userInfo on User {
+	id
+  name
+  bio
+}
+
+mutation myFirstMutation ($input: CreateRepositoryInput!) {
+  createRepository (input: $input) {
+    clientMutationId
+  }
+}
